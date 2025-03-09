@@ -6,21 +6,51 @@ from eralchemy2 import render_er
 
 Base = declarative_base()
 
-class Person(Base):
-    __tablename__ = 'person'
+class Post(Base):
+    __tablename__ = 'Post'
     # Here we define columns for the table person
     # Notice that each column is also a normal Python instance attribute.
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(nullable=False)
+    user_id: Mapped[int] = mapped_column(nullable=False)
+    likes: Mapped[int] = mapped_column(nullable=False)
+    title: Mapped[str] = mapped_column(nullable=False)
 
-class Address(Base):
-    __tablename__ = 'address'
+
+
+class User(Base):
+    __tablename__ = 'User'
     # Here we define columns for the table address.
     # Notice that each column is also a normal Python instance attribute.
     id: Mapped[int] = mapped_column(primary_key=True)
-    street_name: Mapped[str]
-    street_number: Mapped[str]
-    post_code: Mapped[str] = mapped_column(nullable=False)
+    user_name: Mapped[str]
+    first_name: Mapped[str]
+    last_name: Mapped[str]
+    email: Mapped[str] = mapped_column(primary_key=True)
+
+class Comment(Base):
+    __tablename__ = 'Comment'
+    # Here we define columns for the table person
+    # Notice that each column is also a normal Python instance attribute.
+    id: Mapped[int] = mapped_column(primary_key=True)
+    comment_text: Mapped[str] = mapped_column(nullable=False)
+    author_id: Mapped[int] = mapped_column(nullable=False)
+    post_id: Mapped[int] = mapped_column(nullable=False)
+
+class Follower(Base):
+    __tablename__ = 'Follower'
+    # Here we define columns for the table address.
+    # Notice that each column is also a normal Python instance attribute.
+    user_from_id: Mapped[int] = mapped_column(primary_key=True)
+    user_to_id: Mapped[int] = mapped_column(nullable=False)
+   
+class Media(Base):
+    __tablename__ = 'Media'
+    # Here we define columns for the table address.
+    # Notice that each column is also a normal Python instance attribute.
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_name: Mapped[str]
+    first_name: Mapped[str]
+    email: Mapped[str] = mapped_column(nullable=False)
 
     def to_dict(self):
         return {}
